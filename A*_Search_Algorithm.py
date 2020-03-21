@@ -1,3 +1,11 @@
+#  Created by Henry Rivera on 3/21/20.
+#  File Name: A*_Search_Algorithm
+#  Description: A* Search Algorithm Implementation to Solve 15 Puzzle Problem
+#  Copyright © 2019 Henry Rivera. All rights reserved
+
+
+
+
 class Node:
     def __init__(self, data, level, fval):
         """ Initialize the node with the data, level of the node and the calculated fvalue """
