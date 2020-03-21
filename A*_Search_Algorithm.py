@@ -3,11 +3,12 @@
 #  Description: A* Search Algorithm Implementation to Solve 15 Puzzle Problem
 #  Copyright © 2019 Henry Rivera. All rights reserved
 
+
 class Node:
-    def __init__(self, data, level, fval):
-        """ Initialize the node with the data, level of the node and the calculated fvalue """
+    def __init__(self, data, depth, fval):
+        """ Initialize the node with the data, depth of the node and the calculated fvalue """
         self.data = data
-        self.level = level
+        self.depth = depth
         self.fval = fval
 
     def generate_child(self):
@@ -16,18 +17,19 @@ class Node:
         x, y = self.find(self.data, '0')
         """ val_list contains position values for moving the blank space in either of
             the 4 directions [up,down,left,right] respectively. """
+        '''         Down        Up          Left        Up'''
         val_list = [[x, y - 1], [x, y + 1], [x - 1, y], [x + 1, y]]
         children = []
         for i in val_list:
-            child = self.shuffle(self.data, x, y, i[0], i[1])
+            child = self.moveZero(self.data, x, y, i[0], i[1])
             if child is not None:
-                child_node = Node(child, self.level + 1, 0)
+                child_node = Node(child, self.depth + 1, 0)
                 children.append(child_node)
-        print("Level:", self.level)
+        print("depth:", self.depth)
         print("f(n):", self.fval)
         return children
 
-    def shuffle(self, puz, x1, y1, x2, y2):
+    def moveZero(self, puz, x1, y1, x2, y2):
         """ Move the blank space in the given direction and if the position value are out
             of limits the return None """
         if 0 <= x2 < len(self.data) and 0 <= y2 < len(self.data):
@@ -75,14 +77,14 @@ class Puzzle:
 
     def f(self, start, goal):
         """ Heuristic Function to calculate hueristic value f(x) = h(x) + g(x) """
-        return self.h(start.data, goal) + start.level
+        return self.h(start.data, goal) + start.depth
 
     def h(self, start, goal):
         """ Calculates the different between the given puzzles """
         temp = 0
         for i in range(0, self.n):
             for j in range(0, self.n):
-                if start[i][j] != goal[i][j] and start[i][j] != '_':
+                if start[i][j] != goal[i][j] and start[i][j] != '0':
                     temp += 1
         return temp
 
