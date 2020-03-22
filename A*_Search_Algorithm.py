@@ -64,11 +64,11 @@ class A_Search:
 
 class Puzzle:
     def __init__(self, filename):
-        """ Initialize the puzzle size by the specified size, open and closed lists to empty """
+        """ Initialize the puzzle size by the specified size, unchecked and checked lists to empty """
         self.n = 4
         self.filename = filename
-        self.open = []
-        self.closed = []
+        self.unchecked = []
+        self.checked = []
 
     def f(self, initial, goal):
         """ Heuristic Function to calculate hueristic value f(x) = h(x) + g(x) """
@@ -85,7 +85,7 @@ class Puzzle:
 
     def generate_solution(self):
         """ Accept initial and Goal Puzzle state"""
-        f = open(self.filename, "r")
+        f = unchecked(self.filename, "r")
         content = f.read().splitlines()
         states = []
         for line in content:
@@ -96,10 +96,10 @@ class Puzzle:
         initial = A_Search(initial, 0, 0)
         initial.fval = self.f(initial, goal)
         print("Initial:", initial.fval)
-        """ Put the initial node in the open list"""
-        self.open.append(initial)
+        """ Put the initial node in the unchecked list"""
+        self.unchecked.append(initial)
         while True:
-            curr = self.open[0]
+            curr = self.unchecked[0]
             print("")
             print("  | ")
             print("  | ")
@@ -113,11 +113,11 @@ class Puzzle:
                 break
             for i in curr.generate_child():
                 i.fval = self.f(i, goal)
-                self.open.append(i)
-            self.closed.append(curr)
-            del self.open[0]
-        """ sort the open list based on f value """
-        self.open.sort(key=lambda x: x.fval, reverse=False)
+                self.unchecked.append(i)
+            self.checked.append(curr)
+            del self.unchecked[0]
+        """ sort the unchecked list based on f value """
+        self.unchecked.sort(key=lambda x: x.fval, reverse=False)
 
 
 def main():
