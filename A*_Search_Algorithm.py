@@ -4,7 +4,7 @@
 #  Copyright © 2019 Henry Rivera. All rights reserved
 
 
-class Node:
+class A_Search:
     def __init__(self, data, depth, fval):
         """ Initialize the node with the data, depth of the node and the calculated fvalue """
         self.data = data
@@ -15,6 +15,8 @@ class Node:
         """ Generate child nodes from the given node by moving the blank space
             either in the four directions {up,down,left,right} """
         x, y = self.find(self.data, '0')
+        depth_vals = []
+        fvals = []
         """ val_list contains position values for moving the blank space in either of
             the 4 directions [up,down,left,right] respectively. """
         '''         Down        Up          Left        Up'''
@@ -22,8 +24,8 @@ class Node:
         children = []
         for i in val_list:
             child = self.moveZero(self.data, x, y, i[0], i[1])
-            if child is not None:
-                child_node = Node(child, self.depth + 1, 0)
+            if child:
+                child_node = A_Search(child, self.depth + 1, 0)
                 children.append(child_node)
         print("depth:", self.depth)
         print("f(n):", self.fval)
@@ -61,69 +63,66 @@ class Node:
 
 
 class Puzzle:
-    def __init__(self, size=4):
-        """ Initialize the puzzle size by the specified size,open and closed lists to empty """
-        self.n = size
+    def __init__(self, filename):
+        """ Initialize the puzzle size by the specified size, open and closed lists to empty """
+        self.n = 4
+        self.filename = filename
         self.open = []
         self.closed = []
 
-    def accept(self):
-        """ Accepts the puzzle from the user """
-        puz = []
-        for i in range(0, self.n):
-            temp = input().split(" ")
-            puz.append(temp)
-        return puz
-
-    def f(self, start, goal):
+    def f(self, initial, goal):
         """ Heuristic Function to calculate hueristic value f(x) = h(x) + g(x) """
-        return self.h(start.data, goal) + start.depth
+        return self.h(initial.data, goal) + initial.depth
 
-    def h(self, start, goal):
+    def h(self, initial, goal):
         """ Calculates the different between the given puzzles """
-        temp = 0
+        tmp = 0
         for i in range(0, self.n):
             for j in range(0, self.n):
-                if start[i][j] != goal[i][j] and start[i][j] != '0':
-                    temp += 1
-        return temp
+                if initial[i][j] != goal[i][j] and initial[i][j] != '0':
+                    tmp += 1
+        return tmp
 
-    def process(self, filename):
-        """ Accept Start and Goal Puzzle state"""
-        f = open(filename, "r")
+    def generate_solution(self):
+        """ Accept initial and Goal Puzzle state"""
+        f = open(self.filename, "r")
         content = f.read().splitlines()
-        input = []
+        states = []
         for line in content:
-            input.append(line.split())
-        start = input[0:4]
-        goal = input[5:9]
+            states.append(line.split())
+        initial = states[0:4]
+        goal = states[5:9]
 
-        start = Node(start, 0, 0)
-        start.fval = self.f(start, goal)
-        """ Put the start node in the open list"""
-        self.open.append(start)
-        print("\n\n")
+        initial = A_Search(initial, 0, 0)
+        initial.fval = self.f(initial, goal)
+        print("Initial:", initial.fval)
+        """ Put the initial node in the open list"""
+        self.open.append(initial)
         while True:
-            cur = self.open[0]
+            curr = self.open[0]
             print("")
             print("  | ")
             print("  | ")
             print(" \\\'/ \n")
-            for i in cur.data:
+            for i in curr.data:
                 for j in i:
                     print(j, end=" ")
                 print("")
             """ If the difference between current and goal node is 0 we have reached the goal node"""
-            if (self.h(cur.data, goal) == 0):
+            if self.h(curr.data, goal) == 0:
                 break
-            for i in cur.generate_child():
+            for i in curr.generate_child():
                 i.fval = self.f(i, goal)
                 self.open.append(i)
-            self.closed.append(cur)
+            self.closed.append(curr)
             del self.open[0]
         """ sort the open list based on f value """
         self.open.sort(key=lambda x: x.fval, reverse=False)
 
 
-puz = Puzzle()
-puz.process("Input1.txt")
+def main():
+    puz = Puzzle("Input1.txt")
+    puz.generate_solution()
+
+
+main()
