@@ -15,8 +15,6 @@ class A_Search:
         """ Generate child nodes from the given node by moving the blank space
             either in the four directions {up,down,left,right} """
         x, y = self.find(self.data, '0')
-        depth_vals = []
-        fvals = []
         """ val_list contains position values for moving the blank space in either of
             the 4 directions [up,down,left,right] respectively. """
         '''         Down        Up          Left        Up'''
@@ -27,16 +25,16 @@ class A_Search:
             if child:
                 child_node = A_Search(child, self.depth + 1, 0)
                 children.append(child_node)
-        print("depth:", self.depth)
-        print("f(n):", self.fval)
+        # print("depth:", self.depth)
+        # print("f(n):", self.fval)
         return children
 
     def moveZero(self, puz, x1, y1, x2, y2):
-        """ Move the blank space in the given direction and if the position value are out
+        """ Move the 0 in the given direction and if the position value are out
             of limits the return None """
         if 0 <= x2 < len(self.data) and 0 <= y2 < len(self.data):
             temp_puz = []
-            temp_puz = self.copy(puz)
+            temp_puz = self.duplicate(puz)
             temp = temp_puz[x2][y2]
             temp_puz[x2][y2] = temp_puz[x1][y1]
             temp_puz[x1][y1] = temp
@@ -44,8 +42,8 @@ class A_Search:
         else:
             return None
 
-    def copy(self, root):
-        """ Copy function to create a similar matrix of the given node"""
+    def duplicate(self, root):
+        """ Creates duplicate of given node"""
         tmp = []
         for i in root:
             t = []
@@ -85,7 +83,7 @@ class Puzzle:
 
     def generate_solution(self):
         """ Accept initial and Goal Puzzle state"""
-        f = unchecked(self.filename, "r")
+        f = open(self.filename, "r")
         content = f.read().splitlines()
         states = []
         for line in content:
@@ -96,6 +94,7 @@ class Puzzle:
         initial = A_Search(initial, 0, 0)
         initial.fval = self.f(initial, goal)
         print("Initial:", initial.fval)
+        print("Depth:", initial.depth)
         """ Put the initial node in the unchecked list"""
         self.unchecked.append(initial)
         while True:
