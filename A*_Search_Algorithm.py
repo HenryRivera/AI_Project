@@ -5,16 +5,17 @@
 
 import copy
 
+
 class State(object):
     def __init__(self, puz, depth):
         self.puz = puz
         self.possiMove = []
         self.curreMoves = []
         self.depth = depth
-        self.aStar = 0
+        self.fVal = 0
 
     def __gt__(self, other):
-        if self.aStar > other.aStar:
+        if self.fVal > other.fVal:
             return True
         else:
             return False
@@ -24,8 +25,8 @@ class State(object):
         if self.puz[0][0] != '0' and self.puz[1][0] != '0' \
                 and self.puz[2][0] != '0' and self.puz[3][0] != '0':
             posiMove.append('L')
-        if self.puz[0][2] != '0' and self.puz[1][2] != '0' \
-                and self.puz[2][2] != '0' and self.puz[3][2] != '0':
+        if self.puz[0][3] != '0' and self.puz[1][3] != '0' \
+                and self.puz[2][3] != '0' and self.puz[3][3] != '0':
             posiMove.append('R')
         if '0' not in self.puz[0]:
             posiMove.append('U')
@@ -40,7 +41,7 @@ class State(object):
             gLoc = find(goal_board, str(i))
             mah = mah + abs(sLoc[0] - gLoc[0]) + abs(sLoc[1] - gLoc[1])
         print(mah)
-        self.aStar = self.depth + mah
+        self.fVal = self.depth + mah
 
 
 def find(puz, x):
@@ -70,7 +71,7 @@ def moveZero(currBoard, move):
 
 
 def generateNewState(currState, move, goal_board):
-    print("currState.aStar: ", currState.aStar)
+    print("currState.aStar: ", currState.fVal)
     newBoard = moveZero(currState.puz, move)
     newState = State(newBoard, currState.depth+1)
     # print("Inside generateNewState:", currState.curreMoves)
@@ -100,7 +101,7 @@ def main(filename):
     while opened:
         opened.sort(reverse=True)
         current_state = opened.pop()
-        arr.append(current_state.aStar)
+        arr.append(str(current_state.fVal))
         if current_state.puz == goal:
             outputFilename = "Output" + filename[5] + ".txt"
             output = open(outputFilename, "w+")
@@ -110,12 +111,12 @@ def main(filename):
             for row in goal:
                 output.write(' '.join(row) + "\r\n")
             output.write("\r\n")
-            output.write("Correct Moves: " + ', '.join(current_state.curreMoves) + "\r\n")
             output.write("Depth: " + str(current_state.depth) + "\r\n")
             output.write("Nodes created: " + str(nodeCnt) + "\r\n")
-            print(arr)
+            output.write("Solution Path: " + ', '.join(current_state.curreMoves) + "\r\n")
+            output.write("f(n) vals of solution path: " + ', '.join(arr) + "\r\n")
             output.close()
-            return
+            break
         for move in current_state.possiMove:
             newState = generateNewState(current_state, move, goal)
             if newState.puz not in closed:
