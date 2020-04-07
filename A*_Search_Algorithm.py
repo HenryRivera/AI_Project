@@ -3,125 +3,123 @@
 #  Description: A* Search Algorithm Implementation to Solve 15 Puzzle Problem
 #  Copyright © 2019 Henry Rivera. All rights reserved
 
+import copy
 
-class A_Search:
-    def __init__(self, data, depth, fval):
-        """ Initialize the node with the data, depth of the node and the calculated fvalue """
-        self.data = data
+class State(object):
+    def __init__(self, puz, depth):
+        self.puz = puz
+        self.possiMove = []
+        self.curreMoves = []
         self.depth = depth
-        self.fval = fval
+        self.aStar = 0
 
-    def generate_child(self):
-        """ Generate child nodes from the given node by moving the blank space
-            either in the four directions {up,down,left,right} """
-        x, y = self.find(self.data, '0')
-        """ val_list contains position values for moving the blank space in either of
-            the 4 directions [up,down,left,right] respectively. """
-        '''         Down        Up          Left        Up'''
-        val_list = [[x, y - 1], [x, y + 1], [x - 1, y], [x + 1, y]]
-        children = []
-        for i in val_list:
-            child = self.moveZero(self.data, x, y, i[0], i[1])
-            if child:
-                child_node = A_Search(child, self.depth + 1, 0)
-                children.append(child_node)
-        # print("depth:", self.depth)
-        # print("f(n):", self.fval)
-        return children
-
-    def moveZero(self, puz, x1, y1, x2, y2):
-        """ Move the 0 in the given direction and if the position value are out
-            of limits the return None """
-        if 0 <= x2 < len(self.data) and 0 <= y2 < len(self.data):
-            temp_puz = []
-            temp_puz = self.duplicate(puz)
-            temp = temp_puz[x2][y2]
-            temp_puz[x2][y2] = temp_puz[x1][y1]
-            temp_puz[x1][y1] = temp
-            return temp_puz
+    def __gt__(self, other):
+        if self.aStar > other.aStar:
+            return True
         else:
-            return None
+            return False
 
-    def duplicate(self, root):
-        """ Creates duplicate of given node"""
-        tmp = []
-        for i in root:
-            t = []
-            for j in i:
-                t.append(j)
-            tmp.append(t)
-        return tmp
+    def generatePossiMove(self): # modified
+        posiMove = []
+        if self.puz[0][0] != '0' and self.puz[1][0] != '0' \
+                and self.puz[2][0] != '0' and self.puz[3][0] != '0':
+            posiMove.append('L')
+        if self.puz[0][2] != '0' and self.puz[1][2] != '0' \
+                and self.puz[2][2] != '0' and self.puz[3][2] != '0':
+            posiMove.append('R')
+        if '0' not in self.puz[0]:
+            posiMove.append('U')
+        if '0' not in self.puz[3]:
+            posiMove.append('D')
+        self.possiMove = posiMove
 
-    def find(self, puz, x):
-        """ Specifically used to find the position of the blank space """
-        for i in range(0, len(self.data)):
-            for j in range(0, len(self.data)):
-                if puz[i][j] == x:
-                    return i, j
-
-
-class Puzzle:
-    def __init__(self, filename):
-        """ Initialize the puzzle size by the specified size, unchecked and checked lists to empty """
-        self.n = 4
-        self.filename = filename
-        self.unchecked = []
-        self.checked = []
-
-    def f(self, initial, goal):
-        """ Heuristic Function to calculate hueristic value f(x) = h(x) + g(x) """
-        return self.h(initial.data, goal) + initial.depth
-
-    def h(self, initial, goal):
-        """ Calculates the different between the given puzzles """
-        tmp = 0
-        for i in range(0, self.n):
-            for j in range(0, self.n):
-                if initial[i][j] != goal[i][j] and initial[i][j] != '0':
-                    tmp += 1
-        return tmp
-
-    def generate_solution(self):
-        """ Accept initial and Goal Puzzle state"""
-        f = open(self.filename, "r")
-        content = f.read().splitlines()
-        states = []
-        for line in content:
-            states.append(line.split())
-        initial = states[0:4]
-        goal = states[5:9]
-
-        initial = A_Search(initial, 0, 0)
-        initial.fval = self.f(initial, goal)
-        print("Initial:", initial.fval)
-        print("Depth:", initial.depth)
-        """ Put the initial node in the unchecked list"""
-        self.unchecked.append(initial)
-        while True:
-            curr = self.unchecked[0]
-            print("")
-            print("  | ")
-            print("  | ")
-            print(" \\\'/ \n")
-            for i in curr.data:
-                for j in i:
-                    print(j, end=" ")
-                print("")
-            """ If the difference between current and goal node is 0 we have reached the goal node"""
-            if self.h(curr.data, goal) == 0:
-                break
-            for i in curr.generate_child():
-                i.fval = self.f(i, goal)
-                self.unchecked.append(i)
-            self.checked.append(curr)
-            del self.unchecked[0]
-        """ sort the unchecked list based on f value """
-        self.unchecked.sort(key=lambda x: x.fval, reverse=False)
+    def function(self, goal_board):
+        mah = 0
+        for i in range(1, 16): # used to be 9
+            sLoc = find(self.puz, str(i))
+            gLoc = find(goal_board, str(i))
+            mah = mah + abs(sLoc[0] - gLoc[0]) + abs(sLoc[1] - gLoc[1])
+        self.aStar = self.depth + mah
 
 
-def main():
-    puz = Puzzle("Input1.txt")
-    puz.generate_solution()
+def find(puz, x):
+    for i in range(4): # used to be 3
+        for j in range(4):
+            if puz[i][j] == x:
+                return [i, j]
 
 
-main()
+def moveZero(currBoard, move):
+    zero = find(currBoard, '0')
+    # print("Inside moveZero:", currBoard)
+    newBoard = copy.deepcopy(currBoard)
+    if move == 'U':
+        newBoard[zero[0]][zero[1]] = newBoard[zero[0]-1][zero[1]]
+        newBoard[zero[0]-1][zero[1]] = '0'
+    elif move == 'D':
+        newBoard[zero[0]][zero[1]] = newBoard[zero[0]+1][zero[1]]
+        newBoard[zero[0]+1][zero[1]] = '0'
+    elif move == 'L':
+        newBoard[zero[0]][zero[1]] = newBoard[zero[0]][zero[1]-1]
+        newBoard[zero[0]][zero[1]-1] = '0'
+    elif move == 'R':
+        newBoard[zero[0]][zero[1]] = newBoard[zero[0]][zero[1]+1]
+        newBoard[zero[0]][zero[1]+1] = '0'
+    return newBoard
+
+
+def generateNewState(currState, move, goal_board):
+    newBoard = moveZero(currState.puz, move)
+    newState = State(newBoard, currState.depth+1)
+    # print("Inside generateNewState:", currState.curreMoves)
+    currMoves = copy.deepcopy(currState.curreMoves)
+    currMoves.append(move)
+    newState.curreMoves = currMoves
+    newState.function(goal_board)
+    newState.generatePossiMove()
+    return newState
+
+
+def main(filename):
+    f = open(filename, "r")
+    content = f.read().splitlines()
+    states = []
+    for line in content:
+        states.append(line.split())
+    initial = states[0:4]
+    goal = states[5:9]
+    start = State(initial, 0)
+    start.generatePossiMove()
+    start.function(goal)
+    opened = [start]
+    closed = [initial]
+    nodeCnt = 1
+    arr = []
+    while opened:
+        opened.sort(reverse=True)
+        current_state = opened.pop()
+        arr.append(current_state.aStar)
+        if current_state.puz == goal:
+            outputFilename = "Output" + filename[5] + ".txt"
+            output = open(outputFilename, "w+")
+            for r in initial:
+                output.write(' '.join(r) + "\r\n")
+            output.write("\r\n")
+            for row in goal:
+                output.write(' '.join(row) + "\r\n")
+            output.write("\r\n")
+            output.write("Correct Moves: " + ', '.join(current_state.curreMoves) + "\r\n")
+            output.write("Depth: " + str(current_state.depth) + "\r\n")
+            output.write("Nodes created: " + str(nodeCnt) + "\r\n")
+            print(arr)
+            output.close()
+            return
+        for move in current_state.possiMove:
+            newState = generateNewState(current_state, move, goal)
+            if newState.puz not in closed:
+                nodeCnt += 1
+                closed.append(newState.puz)
+                opened.append(newState)
+
+
+main("Input2.txt")
