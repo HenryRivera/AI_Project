@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8f3bb1a-f018-43d7-bdf9-8f6c75ced58e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Output2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/A*_Search_Algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/A*_Search_Algorithm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Output1.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +36,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.back">
+  <component name="RunManager" selected="Python.A*_Search_Algorithm">
     <configuration name="A*_Search_Algorithm" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="her277_project1" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -107,8 +105,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.back" />
         <item itemvalue="Python.A*_Search_Algorithm" />
+        <item itemvalue="Python.back" />
         <item itemvalue="Python.Prob" />
       </list>
     </recent_temporary>
@@ -134,7 +132,7 @@
       <workItem from="1586126101526" duration="3313000" />
       <workItem from="1586195730697" duration="277000" />
       <workItem from="1586211584145" duration="6137000" />
-      <workItem from="1586224253065" duration="299000" />
+      <workItem from="1586224253065" duration="1825000" />
     </task>
     <servers />
   </component>
@@ -149,22 +147,22 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="292" y="127" key="#Inspections/0.23.1440.877@0.23.1440.877" timestamp="1584928603102" />
-    <state width="957" height="230" key="GridCell.Tab.0.bottom" timestamp="1586224360541">
+    <state width="957" height="230" key="GridCell.Tab.0.bottom" timestamp="1586226062272">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="957" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1586224360541" />
-    <state width="957" height="230" key="GridCell.Tab.0.center" timestamp="1586224360540">
+    <state width="957" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1586226062272" />
+    <state width="957" height="230" key="GridCell.Tab.0.center" timestamp="1586226062272">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="957" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1586224360540" />
-    <state width="957" height="230" key="GridCell.Tab.0.left" timestamp="1586224360539">
+    <state width="957" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1586226062272" />
+    <state width="957" height="230" key="GridCell.Tab.0.left" timestamp="1586226062271">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="957" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1586224360539" />
-    <state width="957" height="230" key="GridCell.Tab.0.right" timestamp="1586224360541">
+    <state width="957" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1586226062271" />
+    <state width="957" height="230" key="GridCell.Tab.0.right" timestamp="1586226062272">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="957" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1586224360541" />
+    <state width="957" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1586226062272" />
     <state x="395" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1586224253570">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
@@ -172,7 +170,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/her277_project1$Prob.coverage" NAME="Prob Coverage Results" MODIFIED="1584815830469" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/her277_project1$back.coverage" NAME="back Coverage Results" MODIFIED="1586224360523" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/her277_project1$A__Search_Algorithm.coverage" NAME="A*_Search_Algorithm Coverage Results" MODIFIED="1584929598677" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/her277_project1$back.coverage" NAME="back Coverage Results" MODIFIED="1586225349971" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/her277_project1$A__Search_Algorithm.coverage" NAME="A*_Search_Algorithm Coverage Results" MODIFIED="1586226062259" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

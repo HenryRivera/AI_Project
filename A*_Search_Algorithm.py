@@ -35,15 +35,16 @@ class State(object):
 
     def function(self, goal_board):
         mah = 0
-        for i in range(1, 16): # used to be 9
+        for i in range(1, 16):
             sLoc = find(self.puz, str(i))
             gLoc = find(goal_board, str(i))
             mah = mah + abs(sLoc[0] - gLoc[0]) + abs(sLoc[1] - gLoc[1])
+        print(mah)
         self.aStar = self.depth + mah
 
 
 def find(puz, x):
-    for i in range(4): # used to be 3
+    for i in range(4):
         for j in range(4):
             if puz[i][j] == x:
                 return [i, j]
@@ -69,6 +70,7 @@ def moveZero(currBoard, move):
 
 
 def generateNewState(currState, move, goal_board):
+    print("currState.aStar: ", currState.aStar)
     newBoard = moveZero(currState.puz, move)
     newState = State(newBoard, currState.depth+1)
     # print("Inside generateNewState:", currState.curreMoves)
