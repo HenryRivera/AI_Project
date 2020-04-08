@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f8f3bb1a-f018-43d7-bdf9-8f6c75ced58e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Output3.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/A*_Search_Algorithm.py" beforeDir="false" afterPath="$PROJECT_DIR$/A*_Search_Algorithm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Input3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Input3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Output2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Output2.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Output1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Output1.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +135,8 @@
       <workItem from="1586211584145" duration="6137000" />
       <workItem from="1586224253065" duration="2780000" />
       <workItem from="1586227693990" duration="8000" />
-      <workItem from="1586301470927" duration="1014000" />
+      <workItem from="1586301470927" duration="1275000" />
+      <workItem from="1586387173107" duration="3010000" />
     </task>
     <servers />
   </component>
@@ -152,30 +151,30 @@
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="292" y="127" key="#Inspections/0.23.1440.877@0.23.1440.877" timestamp="1584928603102" />
-    <state width="1354" height="230" key="GridCell.Tab.0.bottom" timestamp="1586302350699">
+    <state width="1354" height="230" key="GridCell.Tab.0.bottom" timestamp="1586390173086">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1354" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1586302350699" />
-    <state width="1354" height="230" key="GridCell.Tab.0.center" timestamp="1586302350697">
+    <state width="1354" height="230" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1586390173086" />
+    <state width="1354" height="230" key="GridCell.Tab.0.center" timestamp="1586390173086">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1354" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1586302350697" />
-    <state width="1354" height="230" key="GridCell.Tab.0.left" timestamp="1586302350696">
+    <state width="1354" height="230" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1586390173086" />
+    <state width="1354" height="230" key="GridCell.Tab.0.left" timestamp="1586390173085">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1354" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1586302350696" />
-    <state width="1354" height="230" key="GridCell.Tab.0.right" timestamp="1586302350698">
+    <state width="1354" height="230" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1586390173085" />
+    <state width="1354" height="230" key="GridCell.Tab.0.right" timestamp="1586390173086">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state width="1354" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1586302350698" />
-    <state x="395" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1586301471651">
+    <state width="1354" height="230" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1586390173086" />
+    <state x="395" y="294" key="com.intellij.ide.util.TipDialog" timestamp="1586387307704">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
-    <state x="395" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1586301471651" />
+    <state x="395" y="294" key="com.intellij.ide.util.TipDialog/0.23.1440.877@0.23.1440.877" timestamp="1586387307704" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/her277_project1$Prob.coverage" NAME="Prob Coverage Results" MODIFIED="1584815830469" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/her277_project1$back.coverage" NAME="back Coverage Results" MODIFIED="1586225349971" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/her277_project1$A__Search_Algorithm.coverage" NAME="A*_Search_Algorithm Coverage Results" MODIFIED="1586302350678" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/her277_project1$A__Search_Algorithm.coverage" NAME="A*_Search_Algorithm Coverage Results" MODIFIED="1586390173076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

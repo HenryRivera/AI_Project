@@ -6,81 +6,86 @@
 import copy
 
 
-class State(object):
-    def __init__(self, puz, depth):
-        self.puz = puz
-        self.possiMove = []
-        self.curreMoves = []
-        self.depth = depth
-        self.fVal = 0
+class GameBoard(object):
+    """ I refer to the current state of the game board as node. Apologies for any inconvenience"""
+    def __init__(self, board, depth):
+        self.board = board  # state of board
+        self.potential = []  # stores potential moves
+        self.current = []  # current moves made
+        self.depth = depth  # depth of shallowest nodes (puzzle)
+        self.fVal = 0  # fVal of current node (puzzle)
 
+    """ Allows us to compare nodes based on fVal to choose which to expand"""
     def __gt__(self, other):
         if self.fVal > other.fVal:
             return True
         else:
             return False
 
-    def generatePossiMove(self): # modified
-        posiMove = []
-        if self.puz[0][0] != '0' and self.puz[1][0] != '0' \
-                and self.puz[2][0] != '0' and self.puz[3][0] != '0':
-            posiMove.append('L')
-        if self.puz[0][3] != '0' and self.puz[1][3] != '0' \
-                and self.puz[2][3] != '0' and self.puz[3][3] != '0':
-            posiMove.append('R')
-        if '0' not in self.puz[0]:
-            posiMove.append('U')
-        if '0' not in self.puz[3]:
-            posiMove.append('D')
-        self.possiMove = posiMove
-
-    def function(self, goal_board):
-        mah = 0
+    """ Generates fVal of node passed in"""
+    def genfVal(self, goalNode):
+        manhattan = 0
         for i in range(1, 16):
-            sLoc = find(self.puz, str(i))
-            gLoc = find(goal_board, str(i))
-            mah = mah + abs(sLoc[0] - gLoc[0]) + abs(sLoc[1] - gLoc[1])
-        print(mah)
-        self.fVal = self.depth + mah
+            ''' finds current position of i'''
+            currPos = find(self.board, str(i))
+            ''' finds goals position of i'''
+            goalPos = find(goalNode, str(i))
+            manhattan = abs(currPos[0] - goalPos[0]) + abs(currPos[1] - goalPos[1]) + manhattan
+        self.fVal = self.depth + manhattan
+
+    """ Creates a list of potential directions we can move the 0 in"""
+    def findPotential(self):
+        moves = []
+        if '0' not in self.board[0]:
+            moves.append('U')
+        if '0' not in self.board[3]:
+            moves.append('D')
+        if self.board[0][0] != '0' and self.board[1][0] != '0' \
+                and self.board[2][0] != '0' and self.board[3][0] != '0':
+            moves.append('L')
+        if self.board[0][3] != '0' and self.board[1][3] != '0' \
+                and self.board[2][3] != '0' and self.board[3][3] != '0':
+            moves.append('R')
+        self.potential = moves
 
 
-def find(puz, x):
+""" Looks for the first occurrence of x"""
+def find(node, x):
     for i in range(4):
         for j in range(4):
-            if puz[i][j] == x:
+            if node[i][j] == x:
                 return [i, j]
 
 
-def moveZero(currBoard, move):
-    zero = find(currBoard, '0')
-    # print("Inside moveZero:", currBoard)
-    newBoard = copy.deepcopy(currBoard)
+""" Having chosen to expand a node with the lowest fVal, we then move the 0"""
+def moveZero(currNode, move):
+    zero = find(currNode, '0')
+    newNode = copy.deepcopy(currNode)
     if move == 'U':
-        newBoard[zero[0]][zero[1]] = newBoard[zero[0]-1][zero[1]]
-        newBoard[zero[0]-1][zero[1]] = '0'
+        newNode[zero[0]][zero[1]] = newNode[zero[0]-1][zero[1]]
+        newNode[zero[0]-1][zero[1]] = '0'
     elif move == 'D':
-        newBoard[zero[0]][zero[1]] = newBoard[zero[0]+1][zero[1]]
-        newBoard[zero[0]+1][zero[1]] = '0'
+        newNode[zero[0]][zero[1]] = newNode[zero[0]+1][zero[1]]
+        newNode[zero[0]+1][zero[1]] = '0'
     elif move == 'L':
-        newBoard[zero[0]][zero[1]] = newBoard[zero[0]][zero[1]-1]
-        newBoard[zero[0]][zero[1]-1] = '0'
-    elif move == 'R':
-        newBoard[zero[0]][zero[1]] = newBoard[zero[0]][zero[1]+1]
-        newBoard[zero[0]][zero[1]+1] = '0'
-    return newBoard
+        newNode[zero[0]][zero[1]] = newNode[zero[0]][zero[1]-1]
+        newNode[zero[0]][zero[1]-1] = '0'
+    else:  # Has to be right
+        newNode[zero[0]][zero[1]] = newNode[zero[0]][zero[1]+1]
+        newNode[zero[0]][zero[1]+1] = '0'
+    return newNode
 
 
-def generateNewState(currState, move, goal_board):
-    print("currState.aStar: ", currState.fVal)
-    newBoard = moveZero(currState.puz, move)
-    newState = State(newBoard, currState.depth+1)
-    # print("Inside generateNewState:", currState.curreMoves)
-    currMoves = copy.deepcopy(currState.curreMoves)
-    currMoves.append(move)
-    newState.curreMoves = currMoves
-    newState.function(goal_board)
-    newState.generatePossiMove()
-    return newState
+""" Having chosen to expand a node with the lowest fVal, we then create the new board"""
+def expandNode(currNode, direction, goalNode):
+    move = moveZero(currNode.board, direction)
+    newNode = GameBoard(move, currNode.depth+1)
+    currMoves = copy.deepcopy(currNode.current)
+    currMoves.append(direction)
+    newNode.current = currMoves
+    newNode.genfVal(goalNode)
+    newNode.findPotential()
+    return newNode
 
 
 def main(filename):
@@ -89,20 +94,26 @@ def main(filename):
     states = []
     for line in content:
         states.append(line.split())
+    """ Reading initial and goal states from file"""
     initial = states[0:4]
     goal = states[5:9]
-    start = State(initial, 0)
-    start.generatePossiMove()
-    start.function(goal)
+    """ Creating root node"""
+    start = GameBoard(initial, 0)
+    """ Looking for potential moves"""
+    start.findPotential()
+    """ And their fVals"""
+    start.genfVal(goal)
+    """ A* search algorithm uses opened and closed lists"""
     opened = [start]
     closed = [initial]
     nodeCnt = 1
-    arr = []
+    fVals = []
     while opened:
         opened.sort(reverse=True)
-        current_state = opened.pop()
-        arr.append(str(current_state.fVal))
-        if current_state.puz == goal:
+        currNode = opened.pop()
+        fVals.append(str(currNode.fVal))
+        """ Found our goal node"""
+        if currNode.board == goal:
             outputFilename = "Output" + filename[5] + ".txt"
             output = open(outputFilename, "w+")
             for r in initial:
@@ -111,18 +122,18 @@ def main(filename):
             for row in goal:
                 output.write(' '.join(row) + "\r\n")
             output.write("\r\n")
-            output.write("Depth: " + str(current_state.depth) + "\r\n")
+            output.write("Depth: " + str(currNode.depth) + "\r\n")
             output.write("Nodes created: " + str(nodeCnt) + "\r\n")
-            output.write("Solution Path: " + ', '.join(current_state.curreMoves) + "\r\n")
-            output.write("f(n) vals of solution path: " + ', '.join(arr) + "\r\n")
+            output.write("Solution Path: " + ', '.join(currNode.current) + "\r\n")
+            output.write("f(n) vals of solution path: " + ', '.join(fVals) + "\r\n")
             output.close()
             break
-        for move in current_state.possiMove:
-            newState = generateNewState(current_state, move, goal)
-            if newState.puz not in closed:
+        for move in currNode.potential:
+            newNode = expandNode(currNode, move, goal)
+            if newNode.board not in closed:
                 nodeCnt += 1
-                closed.append(newState.puz)
-                opened.append(newState)
+                closed.append(newNode.board)
+                opened.append(newNode)
 
 
-main("Input2.txt")
+main("Input1.txt")
