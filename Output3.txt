@@ -8,6 +8,7 @@
 12 2 5 8
 14 15 10 11
 
-Correct Moves: R, D, D, L, L, U, L, U, U, R, D, R
 Depth: 12
 Nodes created: 27
+Solution Path: R, D, D, L, L, U, L, U, U, R, D, R
+f(n) vals of solution path: 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12
